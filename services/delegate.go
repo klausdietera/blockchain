@@ -25,7 +25,7 @@ func NewDelegate(forgeSecret string, activeCount uint16) IDelegateService {
 
 	return &DelegateService{
 		keyPair:     keyPair,
-		publicKey:   models.PublicKey(publicKey),
+		publicKey:   publicKey,
 		activeCount: activeCount,
 	}
 }

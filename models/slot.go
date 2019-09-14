@@ -2,4 +2,4 @@ package models
 
 type Slot = int64
 
-type Slots = map[PublicKey]Slot
+type Slots = map[string]Slot

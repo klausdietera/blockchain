@@ -36,7 +36,7 @@ type Transaction struct {
 	ID              string            `json:"id"`
 	BlockID         string            `json:"blockId"`
 	Type            types.Transaction `json:"type"`
-	SenderPublicKey PublicKey         `json:"senderPublicKey"`
+	SenderPublicKey string            `json:"senderPublicKey"`
 	Fee             int64             `json:"fee"`
 	Signature       string            `json:"signature"`
 	SecondSignature string            `json:"secondSignature"`

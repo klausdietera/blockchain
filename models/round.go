@@ -2,7 +2,7 @@ package models
 
 type HashList struct {
 	Hash      string
-	PublicKey PublicKey
+	PublicKey string
 }
 
 type Round struct {

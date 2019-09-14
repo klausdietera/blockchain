@@ -9,8 +9,8 @@ import (
 
 type Send struct {
 	Base
-	RecipientPublicKey models.PublicKey `json:"recipientPublicKey"`
-	Amount             int64            `json:"amount"`
+	RecipientPublicKey string `json:"recipientPublicKey"`
+	Amount             int64  `json:"amount"`
 }
 
 func (asset *Send) VerifyUnconfirmed(sender *models.Account) error {
@@ -51,7 +51,7 @@ func (asset *Send) UnmarshalJSON(data []byte) error {
 	}
 
 	asset.Amount = tmp.Amount
-	asset.RecipientPublicKey = models.PublicKey(tmp.RecipientPublicKey)
+	asset.RecipientPublicKey = tmp.RecipientPublicKey
 
 	return nil
 }

@@ -7,7 +7,7 @@ import (
 
 type Referral struct {
 	Base
-	Referral models.PublicKey `json:"referral"`
+	Referral string `json:"referral"`
 }
 
 func (asset *Referral) VerifyUnconfirmed(sender *models.Account) error {

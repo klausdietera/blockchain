@@ -7,7 +7,7 @@ type Block struct {
 	PreviousBlockID    string         `json:"previousBlockId"`
 	PayloadHash        string         `json:"payloadHash"`
 	Signature          string         `json:"signature"`
-	GeneratorPublicKey PublicKey      `json:"generatorPublicKey"`
+	GeneratorPublicKey string         `json:"generatorPublicKey"`
 	Height             uint64         `json:"height"`
 	Amount             int64          `json:"amount"`
 	Fee                int64          `json:"fee"`

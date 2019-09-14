@@ -6,7 +6,7 @@ import (
 	"github.com/jamesruan/sodium"
 )
 
-func GenerateKeyPair(secret string) *sodium.SignKP {
+func GenerateKeyPair(secret string) sodium.SignKP {
 	h := sha256.New()
 
 	_, err := h.Write([]byte(secret))
@@ -19,5 +19,5 @@ func GenerateKeyPair(secret string) *sodium.SignKP {
 	}
 	signKP := sodium.SeedSignKP(seed)
 
-	return &signKP
+	return signKP
 }

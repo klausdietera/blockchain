@@ -1,13 +1,11 @@
 package models
 
-type PublicKey string
-
 type Account struct {
-	PublicKey       PublicKey
-	SecondPublicKey PublicKey
+	PublicKey       string
+	SecondPublicKey string
 	Balance         int64
-	Delegate        *Delegate   // fix
-	Votes           []PublicKey //
-	Referral        *Account    //
-	Stakes          string      //
+	Delegate        *Delegate // fix
+	Votes           []string  //
+	Referral        *Account  //
+	Stakes          string    //
 }

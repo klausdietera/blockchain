@@ -12,18 +12,18 @@ var (
 
 func init() {
 	Delegates = &DelegatesRepository{
-		store: make(map[models.PublicKey]*models.Account),
+		store: make(map[string]*models.Account),
 	}
 }
 
 type IDelegatesRepository interface {
 	Add(account *models.Account)
-	Remove(publicKey models.PublicKey)
+	Remove(publicKey string)
 	GetAll() []*models.Account
 }
 
 type DelegatesRepository struct {
-	store map[models.PublicKey]*models.Account
+	store map[string]*models.Account
 }
 
 func (r *DelegatesRepository) Add(account *models.Account) {
@@ -32,7 +32,7 @@ func (r *DelegatesRepository) Add(account *models.Account) {
 	r.store[account.PublicKey] = account
 }
 
-func (r *DelegatesRepository) Remove(publicKey models.PublicKey) {
+func (r *DelegatesRepository) Remove(publicKey string) {
 	log.Printf("[Repository][Delegates][Remove] %s", r.store[publicKey].Delegate.Username)
 
 	delete(r.store, publicKey)
