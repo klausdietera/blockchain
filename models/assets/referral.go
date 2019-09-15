@@ -1,6 +1,8 @@
 package assets
 
 import (
+	"bytes"
+
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/repositories"
 )
@@ -22,4 +24,10 @@ func (asset *Referral) ApplyUnconfirmed(sender *models.Account) {
 
 func (asset *Referral) UndoUnconfirmed(sender *models.Account) {
 	sender.Referral = nil
+}
+
+func (asset *Referral) GetBytes() []byte {
+	buf := new(bytes.Buffer)
+
+	return buf.Bytes()
 }

@@ -26,3 +26,10 @@ func UnmarshalAsset(bytes []byte, t types.Transaction) (models.IAsset, error) {
 	}
 	return nil, errors.New("Invalid transaction type")
 }
+
+func CreateSendAsset(recipientPublicKey string, amount int64) assets.Send {
+	return assets.Send{
+		RecipientPublicKey: recipientPublicKey,
+		Amount:             amount,
+	}
+}

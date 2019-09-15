@@ -1,7 +1,10 @@
 package assets
 
 import (
+	"bytes"
+	"encoding/binary"
 	"encoding/json"
+	"fmt"
 
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/repositories"
@@ -54,4 +57,16 @@ func (asset *Send) UnmarshalJSON(data []byte) error {
 	asset.RecipientPublicKey = tmp.RecipientPublicKey
 
 	return nil
+}
+
+func (asset *Send) GetBytes() []byte {
+	buf := new(bytes.Buffer)
+	err := binary.Write(buf, binary.LittleEndian, asset.Amount)
+	if err != nil {
+		fmt.Println("binary.Write failed:", err)
+	}
+
+	buf.Write([]byte(asset.RecipientPublicKey))
+
+	return buf.Bytes()
 }

@@ -1,6 +1,8 @@
 package assets
 
 import (
+	"bytes"
+
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/repositories"
 )
@@ -32,4 +34,10 @@ func (asset *Delegate) UndoUnconfirmed(sender *models.Account) {
 	repositories.Delegates.Remove(sender.PublicKey)
 
 	sender.Delegate = nil
+}
+
+func (asset *Delegate) GetBytes() []byte {
+	buf := new(bytes.Buffer)
+
+	return buf.Bytes()
 }

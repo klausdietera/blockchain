@@ -33,12 +33,12 @@ func NewDelegate(forgeSecret string, activeCount uint16) IDelegateService {
 type IDelegateService interface {
 	Forge(round *models.Round)
 	GetActive() []*models.Account
-	GetPublicKey() models.PublicKey
+	GetPublicKey() string
 }
 
 type DelegateService struct {
-	publicKey   models.PublicKey
-	keyPair     *sodium.SignKP
+	publicKey   string
+	keyPair     sodium.SignKP
 	activeCount uint16
 }
 
@@ -79,6 +79,6 @@ func (s *DelegateService) GetActive() []*models.Account {
 	return active
 }
 
-func (s *DelegateService) GetPublicKey() models.PublicKey {
+func (s *DelegateService) GetPublicKey() string {
 	return s.publicKey
 }

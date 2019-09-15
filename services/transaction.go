@@ -22,7 +22,7 @@ type ITransaction interface {
 	Undo(data interface{}) error
 }
 
-type TransactionService interface {
+type ITransactionService interface {
 	ITransaction
 
 	CalculateID(tx *models.Transaction) string
@@ -30,4 +30,10 @@ type TransactionService interface {
 	ToBytes(tx *models.Transaction) bytes.Buffer
 
 	IsConfirmed(tx *models.Transaction) bool
+}
+
+type TransactionService struct{}
+
+func (s *TransactionService) Create(data interface{}) models.Transaction {
+	return models.Transaction{}
 }

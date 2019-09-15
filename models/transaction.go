@@ -25,6 +25,7 @@ type IAsset interface {
 	json.Unmarshaler
 	GetAmount() int64
 	CalculateFee() int64
+	GetBytes() []byte
 }
 
 type ITransaction interface {

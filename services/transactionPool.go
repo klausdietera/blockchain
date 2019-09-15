@@ -12,8 +12,8 @@ type TransactionPool struct {
 	Pool
 
 	transactions map[string]*models.Transaction
-	bySender     map[models.PublicKey]*models.Transaction
-	byRecipient  map[models.PublicKey]*models.Transaction
+	bySender     map[string]*models.Transaction
+	byRecipient  map[string]*models.Transaction
 }
 
 func (tp *TransactionPool) Lock() {
