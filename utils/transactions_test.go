@@ -1,4 +1,4 @@
-package utils_test
+package utils
 
 import (
 	"reflect"
@@ -8,13 +8,12 @@ import (
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/models/assets"
 	"bitbucket.org/axelsheva/blockchain/models/types"
-	"bitbucket.org/axelsheva/blockchain/utils"
 )
 
 func TestCreateSendTransaction(t *testing.T) {
-	keyPair := utils.GenerateKeyPair("hen worry two thank unfair salmon smile oven gospel grab latin reason")
+	keyPair := GenerateKeyPair("hen worry two thank unfair salmon smile oven gospel grab latin reason")
 
-	transaction := utils.CreateTransaction(models.Transaction{
+	transaction := CreateTransaction(models.Transaction{
 		Asset: &assets.Send{
 			Amount:             100000000,
 			RecipientPublicKey: "2",
@@ -39,7 +38,7 @@ func TestSendTransactionUnmarshalJSON(t *testing.T) {
 	bytes := []byte(`{"id":"c7d80bf1bb220e62735bd388549a87c0cd93b8be30a1ae2f7291ce20d2a94b79","blockId":"cbb9449abb9672d33fa2eb200b1c8b03db7c6572dfb6e59dc334c0ab82b63ab0","type":10,"createdAt":"2019-01-01T00:00:00.000Z","senderPublicKey":"49a2b5e68f851a11058748269a276b0c0d36497215548fb40d4fe4e929d0283a","signature":"226ed984bf3d82b7c332ce48bc976fcc35930d22cb068b2e9de993a4fb3e402d4bdb7077d0923b8dd2c205e6a2473884752615c0787967b218143eec5df1390c","fee":10,"salt":"a7fdae234eeb416e31f5f02571f54a0c","asset":{"recipientPublicKey":"49a2b5e68f851a11058748269a276b0c0d36497215548fb40d4fe4e929d0283a","amount":4500000000000000}}`)
 
 	transaction := models.Transaction{}
-	err := utils.UnmarshalTransaction(bytes, &transaction)
+	err := UnmarshalTransaction(bytes, &transaction)
 	if err != nil {
 		panic(err)
 	}

@@ -1,11 +1,10 @@
-package service_test
+package services
 
 import (
 	"reflect"
 	"testing"
 
 	"bitbucket.org/axelsheva/blockchain/models"
-	"bitbucket.org/axelsheva/blockchain/services"
 )
 
 func TestGenerateHashList(t *testing.T) {
@@ -22,7 +21,7 @@ func TestGenerateHashList(t *testing.T) {
 		},
 	}
 
-	roundService := services.RoundService{}
+	roundService := RoundService{}
 	hashList := roundService.GenerateHashList(blockID, delegates)
 
 	expectedHashList := []*models.HashList{
@@ -59,7 +58,7 @@ func TestGenerateSlots(t *testing.T) {
 		},
 	}
 
-	roundService := services.RoundService{}
+	roundService := RoundService{}
 	slots := roundService.GenerateSlots(blockID, delegates, 0)
 
 	expectedSlots := models.Slots{}

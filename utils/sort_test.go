@@ -1,4 +1,4 @@
-package utils_test
+package utils
 
 import (
 	"reflect"
@@ -8,7 +8,6 @@ import (
 
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/models/types"
-	"bitbucket.org/axelsheva/blockchain/utils"
 )
 
 func TestBlockSort(t *testing.T) {
@@ -26,7 +25,7 @@ func TestBlockSort(t *testing.T) {
 		transactions[0],
 	}
 
-	sort.Sort(utils.BlockSort(transactions))
+	sort.Sort(BlockSort(transactions))
 
 	isEqual := reflect.DeepEqual(transactions, expected)
 	if !isEqual {
@@ -69,7 +68,7 @@ func TestDelegatesSort(t *testing.T) {
 		delegates[0],
 	}
 
-	sort.Sort(sort.Reverse(utils.ByVotes(delegates)))
+	sort.Sort(sort.Reverse(ByVotes(delegates)))
 
 	isEqual := reflect.DeepEqual(delegates, expected)
 	if !isEqual {

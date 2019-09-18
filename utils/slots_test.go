@@ -1,10 +1,8 @@
-package utils_test
+package utils
 
 import (
 	"testing"
 	"time"
-
-	"bitbucket.org/axelsheva/blockchain/utils"
 )
 
 type firstSlotTest struct {
@@ -44,7 +42,7 @@ func TestCalculateFirstSlot(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		firstSlot := utils.CalculateFirstSlot(time.Unix(test.Time, 0), slotInterval, activeDelegatesCount)
+		firstSlot := CalculateFirstSlot(time.Unix(test.Time, 0), slotInterval, activeDelegatesCount)
 
 		if firstSlot != test.ExpectedFirstSlot {
 			t.Errorf("Invalid first slot calculation. Expected %d, actual: %d", test.ExpectedFirstSlot, firstSlot)
@@ -58,7 +56,7 @@ func TestCalculateSlot(t *testing.T) {
 		panic(err)
 	}
 
-	slot := utils.CalculateSlot(timestamp, 10)
+	slot := CalculateSlot(timestamp, 10)
 	expectedSlot := int64(154630080)
 	if slot != expectedSlot {
 		t.Errorf("Invalid slot calculation. Expected %d, actual: %d", expectedSlot, slot)
@@ -69,7 +67,7 @@ func TestCalculateSlot2(t *testing.T) {
 	slotInterval := uint8(10)
 	count := 100
 	for index := 0; index < count; index++ {
-		slot := utils.CalculateSlot(time.Unix(int64(index*int(slotInterval)), 0), slotInterval)
+		slot := CalculateSlot(time.Unix(int64(index*int(slotInterval)), 0), slotInterval)
 
 		if slot != int64(index) {
 			t.Errorf("Invalid slot calculation. Expected %d, actual: %d", index, slot)
