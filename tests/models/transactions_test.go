@@ -64,11 +64,17 @@ func TestGetBytes(t *testing.T) {
 		},
 	}
 
-	b, err := transaction.GetBytes(false, false)
+	b, err := transaction.GetBytes(true, true)
 	if err != nil {
 		t.Fatalf("Cannot get bytes from transaction. Error: %v.", err)
 	}
 	buf := bytes.NewReader(b)
+
+	actualBufferSize := buf.Size()
+	expectedSize := int64(180)
+	if actualBufferSize != expectedSize {
+		t.Errorf("Buffer size is incorrect. Actual %d, Expected %d", actualBufferSize, expectedSize)
+	}
 
 	var actualAmount int64
 	expectedAmount := int64(1234567890)
@@ -83,11 +89,30 @@ func TestGetBytes(t *testing.T) {
 		t.Errorf("Recipient public key is incorrect. Actual %s, Expected %s", actualRecipientPublicKey, expectedRecipientPublicKey)
 	}
 
-	var actualType int
+	var actualType types.TransactionType
 	expectedType := types.TransactionSend
-	buf.Seek(73, io.SeekStart)
+	buf.Seek(72, io.SeekStart)
 	binary.Read(buf, binary.LittleEndian, &actualType)
 	if actualType != expectedType {
 		t.Errorf("Transaction type is incorrect. Actual %d, Expected %d", actualType, expectedType)
+	}
+
+	var actualCreatedAt int64
+	expectedCreatedAt := transaction.CreatedAt.Unix()
+	binary.Read(buf, binary.LittleEndian, &actualCreatedAt)
+	if actualCreatedAt != expectedCreatedAt {
+		t.Errorf("CreatedAt is incorrect. Actual %d, Expected %d", actualCreatedAt, expectedCreatedAt)
+	}
+
+	var actualSalt string = string(b[84:116])
+	expectedSalt := transaction.Salt
+	if actualSalt != expectedSalt {
+		t.Errorf("Salt is incorrect. Actual %s, Expected %s", actualSalt, expectedSalt)
+	}
+
+	actualSenderPublicKey := string(b[116:180])
+	expectedSenderPublicKey := "f4ae589b02f97e9ab5bce61cf187bcc96cfb3fdf9a11333703a682b7d47c8dc1"
+	if actualSenderPublicKey != expectedSenderPublicKey {
+		t.Errorf("Sender public key is incorrect. Actual %s, Expected %s", actualSenderPublicKey, expectedSenderPublicKey)
 	}
 }
