@@ -28,18 +28,22 @@ func (asset *Send) CalculateFee() int64 {
 	return asset.Amount / 10000
 }
 
-func (asset *Send) ApplyUnconfirmed(sender *models.Account) {
+func (asset *Send) ApplyUnconfirmed(sender *models.Account) error {
 	sender.Balance -= asset.Amount
 
 	recipient := repositories.Accounts.Get(asset.RecipientPublicKey)
 	recipient.Balance += asset.Amount
+
+	return nil
 }
 
-func (asset *Send) UndoUnconfirmed(sender *models.Account) {
+func (asset *Send) UndoUnconfirmed(sender *models.Account) error {
 	sender.Balance += asset.Amount
 
 	recipient := repositories.Accounts.Get(asset.RecipientPublicKey)
 	recipient.Balance -= asset.Amount
+
+	return nil
 }
 
 func (asset *Send) UnmarshalJSON(data []byte) error {

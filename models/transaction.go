@@ -1,8 +1,11 @@
 package models
 
 import (
+	"bytes"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"bitbucket.org/axelsheva/blockchain/models/types"
@@ -15,8 +18,8 @@ type IVerifier interface {
 }
 
 type IApplier interface {
-	ApplyUnconfirmed(sender *Account)
-	UndoUnconfirmed(sender *Account)
+	ApplyUnconfirmed(sender *Account) error
+	UndoUnconfirmed(sender *Account) error
 }
 
 type IAsset interface {
@@ -34,16 +37,46 @@ type ITransaction interface {
 }
 
 type Transaction struct {
-	ID              string            `json:"id"`
-	BlockID         string            `json:"blockId"`
-	Type            types.Transaction `json:"type"`
-	SenderPublicKey string            `json:"senderPublicKey"`
-	Fee             int64             `json:"fee"`
-	Signature       string            `json:"signature"`
-	SecondSignature string            `json:"secondSignature"`
-	CreatedAt       time.Time         `json:"createdAt"`
-	Salt            string            `json:"salt"`
-	Asset           IAsset            `json:"asset"`
+	ID              string                `json:"id"`
+	BlockID         string                `json:"blockId"`
+	Type            types.TransactionType `json:"type"`
+	SenderPublicKey string                `json:"senderPublicKey"`
+	Fee             int64                 `json:"fee"`
+	Signature       string                `json:"signature"`
+	SecondSignature string                `json:"secondSignature"`
+	CreatedAt       time.Time             `json:"createdAt"`
+	Salt            string                `json:"salt"`
+	Asset           IAsset                `json:"asset"`
+}
+
+func (transaction *Transaction) GetBytes(skipSignature bool, skipSecondSignature bool) ([]byte, error) {
+	buf := new(bytes.Buffer)
+	buf.Write(transaction.Asset.GetBytes())
+
+	err := binary.Write(buf, binary.LittleEndian, transaction.Type)
+	if err != nil {
+		fmt.Println("binary.Write failed:", err)
+		return buf.Bytes(), err
+	}
+
+	err = binary.Write(buf, binary.LittleEndian, transaction.CreatedAt.Unix())
+	if err != nil {
+		fmt.Println("binary.Write failed:", err)
+		return buf.Bytes(), err
+	}
+
+	buf.Write([]byte(transaction.Salt))
+	buf.Write([]byte(transaction.SenderPublicKey))
+
+	if !skipSignature && transaction.Signature != "" {
+		buf.Write([]byte(transaction.Signature))
+	}
+
+	if !skipSecondSignature && transaction.SecondSignature != "" {
+		buf.Write([]byte(transaction.SecondSignature))
+	}
+
+	return buf.Bytes(), nil
 }
 
 func (transaction *Transaction) VerifyUnconfirmed(sender *Account) error {

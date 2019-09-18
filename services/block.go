@@ -23,7 +23,7 @@ func init() {
 type IBlockService interface {
 	SetLastBlock(block *models.Block)
 	GetLastBlock() *models.Block
-	Generate(keyPair *sodium.SignKP, timestamp time.Time) (*models.Block, error)
+	Generate(keyPair sodium.SignKP, timestamp time.Time) (*models.Block, error)
 	ApplyGenesisBlock(block *models.Block) error
 	Process(block *models.Block) error
 }
@@ -74,7 +74,7 @@ func (s *BlockService) Process(block *models.Block) error {
 	return nil
 }
 
-func (s *BlockService) Generate(keyPair *sodium.SignKP, timestamp time.Time) (*models.Block, error) {
+func (s *BlockService) Generate(keyPair sodium.SignKP, timestamp time.Time) (*models.Block, error) {
 	log.Printf("[Service][Block][Generate] Timestamp: %s", timestamp.Format(time.RFC3339))
 
 	block := models.Block{

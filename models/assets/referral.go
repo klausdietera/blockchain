@@ -16,14 +16,18 @@ func (asset *Referral) VerifyUnconfirmed(sender *models.Account) error {
 	return nil
 }
 
-func (asset *Referral) ApplyUnconfirmed(sender *models.Account) {
+func (asset *Referral) ApplyUnconfirmed(sender *models.Account) error {
 	referral := repositories.Accounts.Get(asset.Referral)
 
 	sender.Referral = referral
+
+	return nil
 }
 
-func (asset *Referral) UndoUnconfirmed(sender *models.Account) {
+func (asset *Referral) UndoUnconfirmed(sender *models.Account) error {
 	sender.Referral = nil
+
+	return nil
 }
 
 func (asset *Referral) GetBytes() []byte {

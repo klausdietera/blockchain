@@ -10,7 +10,7 @@ import (
 	"github.com/jamesruan/sodium"
 )
 
-func CreateTransaction(data models.Transaction, keyPair *sodium.SignKP, secondKeyPair *sodium.SignKP) *models.Transaction {
+func CreateTransaction(data models.Transaction, keyPair sodium.SignKP, secondKeyPair sodium.SignKP) models.Transaction {
 	transaction := models.Transaction{
 		Fee:       data.Asset.CalculateFee(),
 		Asset:     data.Asset,
@@ -18,7 +18,7 @@ func CreateTransaction(data models.Transaction, keyPair *sodium.SignKP, secondKe
 		CreatedAt: time.Now(),
 	}
 
-	return &transaction
+	return transaction
 }
 
 func UnmarshalTransaction(data []byte, transaction *models.Transaction) error {
