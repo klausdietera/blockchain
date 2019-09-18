@@ -10,7 +10,7 @@ import (
 
 func TestGetActive(t *testing.T) {
 	activeDelegatesCount := uint16(3)
-	services.InitDelegate("", activeDelegatesCount)
+	services.Delegate = services.NewDelegate("", activeDelegatesCount)
 
 	delegates := []*models.Account{
 		{

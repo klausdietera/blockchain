@@ -10,7 +10,7 @@ import (
 
 func TestSendAssetUnmarshal(t *testing.T) {
 	bytes := []byte(`{"recipientPublicKey":"1","amount":2}`)
-	asset, err := utils.UnmarshalAsset(bytes, types.SendType)
+	asset, err := utils.UnmarshalAsset(bytes, types.TransactionSend)
 	if err != nil {
 		t.Error(err)
 	}

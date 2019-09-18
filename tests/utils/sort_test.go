@@ -13,10 +13,10 @@ import (
 
 func TestBlockSort(t *testing.T) {
 	transactions := []*models.Transaction{
-		{Type: types.SendType, CreatedAt: time.Unix(40, 0), ID: "b"},
-		{Type: types.SendType, CreatedAt: time.Unix(40, 0), ID: "a"},
-		{Type: types.SendType, CreatedAt: time.Unix(10, 0), ID: "h"},
-		{Type: types.ReferralType, CreatedAt: time.Unix(50, 0), ID: "z"},
+		{Type: types.TransactionSend, CreatedAt: time.Unix(40, 0), ID: "b"},
+		{Type: types.TransactionSend, CreatedAt: time.Unix(40, 0), ID: "a"},
+		{Type: types.TransactionSend, CreatedAt: time.Unix(10, 0), ID: "h"},
+		{Type: types.TransactionReferral, CreatedAt: time.Unix(50, 0), ID: "z"},
 	}
 
 	expected := []*models.Transaction{

@@ -12,12 +12,14 @@ import (
 )
 
 func TestCreateSendTransaction(t *testing.T) {
+	keyPair := utils.GenerateKeyPair("hen worry two thank unfair salmon smile oven gospel grab latin reason")
+
 	transaction := utils.CreateTransaction(models.Transaction{
 		Asset: &assets.Send{
 			Amount:             100000000,
 			RecipientPublicKey: "2",
 		},
-	}, nil, nil)
+	}, keyPair, nil)
 
 	expectedFee := int64(10000)
 	if transaction.Fee != expectedFee {
@@ -49,7 +51,7 @@ func TestSendTransactionUnmarshalJSON(t *testing.T) {
 	expectedTransaction := models.Transaction{
 		ID:              "c7d80bf1bb220e62735bd388549a87c0cd93b8be30a1ae2f7291ce20d2a94b79",
 		BlockID:         "cbb9449abb9672d33fa2eb200b1c8b03db7c6572dfb6e59dc334c0ab82b63ab0",
-		Type:            types.SendType,
+		Type:            types.TransactionSend,
 		CreatedAt:       createdAt,
 		Signature:       "226ed984bf3d82b7c332ce48bc976fcc35930d22cb068b2e9de993a4fb3e402d4bdb7077d0923b8dd2c205e6a2473884752615c0787967b218143eec5df1390c",
 		SenderPublicKey: "49a2b5e68f851a11058748269a276b0c0d36497215548fb40d4fe4e929d0283a",

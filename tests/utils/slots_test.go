@@ -9,7 +9,7 @@ import (
 
 type firstSlotTest struct {
 	Time              int64
-	ExpectedFirstSlot uint64
+	ExpectedFirstSlot int64
 }
 
 func TestCalculateFirstSlot(t *testing.T) {
@@ -59,7 +59,7 @@ func TestCalculateSlot(t *testing.T) {
 	}
 
 	slot := utils.CalculateSlot(timestamp, 10)
-	expectedSlot := uint64(154630080)
+	expectedSlot := int64(154630080)
 	if slot != expectedSlot {
 		t.Errorf("Invalid slot calculation. Expected %d, actual: %d", expectedSlot, slot)
 	}
@@ -71,7 +71,7 @@ func TestCalculateSlot2(t *testing.T) {
 	for index := 0; index < count; index++ {
 		slot := utils.CalculateSlot(time.Unix(int64(index*int(slotInterval)), 0), slotInterval)
 
-		if slot != uint64(index) {
+		if slot != int64(index) {
 			t.Errorf("Invalid slot calculation. Expected %d, actual: %d", index, slot)
 		}
 	}

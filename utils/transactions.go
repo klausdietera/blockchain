@@ -10,7 +10,7 @@ import (
 	"github.com/jamesruan/sodium"
 )
 
-func CreateTransaction(data models.Transaction, keyPair sodium.SignKP, secondKeyPair sodium.SignKP) models.Transaction {
+func CreateTransaction(data models.Transaction, keyPair sodium.SignKP, secondKeyPair *sodium.SignKP) models.Transaction {
 	transaction := models.Transaction{
 		Fee:       data.Asset.CalculateFee(),
 		Asset:     data.Asset,
@@ -23,7 +23,7 @@ func CreateTransaction(data models.Transaction, keyPair sodium.SignKP, secondKey
 
 func UnmarshalTransaction(data []byte, transaction *models.Transaction) error {
 	var tmp struct {
-		Type types.Transaction `json:"type"`
+		Type types.TransactionType `json:"type"`
 	}
 
 	err := json.Unmarshal(data, &tmp)
@@ -33,7 +33,7 @@ func UnmarshalTransaction(data []byte, transaction *models.Transaction) error {
 
 	var asset models.IAsset
 	switch tmp.Type {
-	case types.SendType:
+	case types.TransactionSend:
 		asset = &assets.Send{}
 	}
 
