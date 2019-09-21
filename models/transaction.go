@@ -2,13 +2,16 @@ package models
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
 
 	"bitbucket.org/axelsheva/blockchain/models/types"
+	"github.com/jamesruan/sodium"
 )
 
 const SALT_LENGTH = 32
@@ -77,6 +80,36 @@ func (transaction *Transaction) GetBytes(skipSignature bool, skipSecondSignature
 	}
 
 	return buf.Bytes(), nil
+}
+
+func (transaction *Transaction) CalculateHash() ([32]byte, error) {
+	b, err := transaction.GetBytes(false, false)
+	if err != nil {
+		var emptyBytes [32]byte
+		return emptyBytes, err
+	}
+
+	return sha256.Sum256(b), nil
+}
+
+func (transaction *Transaction) CalculateID() (string, error) {
+	hash, err := transaction.CalculateHash()
+	if err != nil {
+		return "", err
+	}
+
+	return hex.EncodeToString(hash[:]), nil
+}
+
+func (transaction *Transaction) CalculateSignature(keyPair sodium.SignKP) (string, error) {
+	hash, err := transaction.CalculateHash()
+	if err != nil {
+		return "", err
+	}
+
+	b := sodium.Bytes(hash[:])
+	signature := b.SignDetached(keyPair.SecretKey)
+	return hex.EncodeToString(signature.Bytes), nil
 }
 
 func (transaction *Transaction) VerifyUnconfirmed(sender *Account) error {
