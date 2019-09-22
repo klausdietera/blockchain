@@ -4,7 +4,7 @@ import (
 	"bitbucket.org/axelsheva/blockchain/models"
 )
 
-type BlockSort []*models.Transaction
+type BlockSort []models.Transaction
 
 func (a BlockSort) Len() int      { return len(a) }
 func (a BlockSort) Swap(i, j int) { a[i], a[j] = a[j], a[i] }

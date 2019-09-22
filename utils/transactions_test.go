@@ -12,6 +12,7 @@ import (
 
 func TestCreateSendTransaction(t *testing.T) {
 	keyPair := GenerateKeyPair("hen worry two thank unfair salmon smile oven gospel grab latin reason")
+	secondKeyPair := GenerateKeyPair("hen worry two thank unfair salmon smile oven gospel grab latin reason")
 
 	createdAt, err := time.Parse(time.RFC3339, "2019-09-23T22:08:41+00:00")
 	if err != nil {
@@ -26,7 +27,7 @@ func TestCreateSendTransaction(t *testing.T) {
 		},
 		Salt:      "spDdryEuGzeNulzOBgZHekfOIByRllBe",
 		CreatedAt: createdAt,
-	}, keyPair, nil)
+	}, keyPair, &secondKeyPair)
 
 	if err != nil {
 		t.Fatalf("Cannot create transaction. Error: %s", err)
@@ -59,12 +60,12 @@ func TestCreateSendTransaction(t *testing.T) {
 		t.Errorf("Transaction signature is invalid. Expected: %s, actual: %s", expectedSignature, transaction.Signature)
 	}
 
-	expectedSecondSignature := ""
+	expectedSecondSignature := "fd058d3835ce4466579bedaa94ae7fcf26df6dd40fc0de63ca34c9eb01dd9c006d7c009c40a43d4087c11d15326ef9a7ffee8d43931681e99c11ffed00074702"
 	if transaction.SecondSignature != expectedSecondSignature {
 		t.Errorf("Transaction second signature is invalid. Expected: %s, actual: %s", expectedSecondSignature, transaction.SecondSignature)
 	}
 
-	expectedID := "18b3535192e4585f34043477b956541748b41d42fa498261d223a6e14ac4d2f1"
+	expectedID := "566fa4892b1717429c863f165097f654962f8c366588ee1a648c5699d2d471cb"
 	if transaction.ID != expectedID {
 		t.Errorf("Transaction id is invalid. Expected: %s, actual: %s", expectedID, transaction.ID)
 	}

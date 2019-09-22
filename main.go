@@ -14,7 +14,7 @@ func main() {
 
 	services.PriorityWorkQueue = models.NewPriorityWorkQueue(1000, 1000)
 
-	err := services.Block.ApplyGenesisBlock(&development.GenesisBlock)
+	err := services.Block.ApplyGenesisBlock(development.GenesisBlock)
 	if err != nil {
 		panic(err)
 	}

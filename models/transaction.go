@@ -82,8 +82,8 @@ func (transaction *Transaction) GetBytes(skipSignature bool, skipSecondSignature
 	return buf.Bytes(), nil
 }
 
-func (transaction *Transaction) CalculateHash() ([32]byte, error) {
-	b, err := transaction.GetBytes(false, false)
+func (transaction *Transaction) CalculateHash(skipSignature bool) ([32]byte, error) {
+	b, err := transaction.GetBytes(skipSignature, skipSignature)
 	if err != nil {
 		var emptyBytes [32]byte
 		return emptyBytes, err
@@ -93,7 +93,7 @@ func (transaction *Transaction) CalculateHash() ([32]byte, error) {
 }
 
 func (transaction *Transaction) CalculateID() (string, error) {
-	hash, err := transaction.CalculateHash()
+	hash, err := transaction.CalculateHash(false)
 	if err != nil {
 		return "", err
 	}
@@ -102,7 +102,7 @@ func (transaction *Transaction) CalculateID() (string, error) {
 }
 
 func (transaction *Transaction) CalculateSignature(keyPair sodium.SignKP) (string, error) {
-	hash, err := transaction.CalculateHash()
+	hash, err := transaction.CalculateHash(true)
 	if err != nil {
 		return "", err
 	}

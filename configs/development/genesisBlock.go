@@ -23,7 +23,7 @@ func init() {
 		Height:      1,
 		PayloadHash: "7e6ba6ec459d96207414f61b67ecd2ecd8c946507bb102a1e47a0ce987e494d0",
 		CreatedAt:   timestamp,
-		Transactions: []*models.Transaction{
+		Transactions: []models.Transaction{
 			{
 				ID:              "c7d80bf1bb220e62735bd388549a87c0cd93b8be30a1ae2f7291ce20d2a94b79",
 				BlockID:         "cbb9449abb9672d33fa2eb200b1c8b03db7c6572dfb6e59dc334c0ab82b63ab0",
