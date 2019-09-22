@@ -1,4 +1,4 @@
-package utils_test
+package utils
 
 import (
 	"reflect"
@@ -8,25 +8,24 @@ import (
 
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/models/types"
-	"bitbucket.org/axelsheva/blockchain/utils"
 )
 
 func TestBlockSort(t *testing.T) {
-	transactions := []*models.Transaction{
-		{Type: types.SendType, CreatedAt: time.Unix(40, 0), ID: "b"},
-		{Type: types.SendType, CreatedAt: time.Unix(40, 0), ID: "a"},
-		{Type: types.SendType, CreatedAt: time.Unix(10, 0), ID: "h"},
-		{Type: types.ReferralType, CreatedAt: time.Unix(50, 0), ID: "z"},
+	transactions := []models.Transaction{
+		{Type: types.TransactionSend, CreatedAt: time.Unix(40, 0), ID: "b"},
+		{Type: types.TransactionSend, CreatedAt: time.Unix(40, 0), ID: "a"},
+		{Type: types.TransactionSend, CreatedAt: time.Unix(10, 0), ID: "h"},
+		{Type: types.TransactionReferral, CreatedAt: time.Unix(50, 0), ID: "z"},
 	}
 
-	expected := []*models.Transaction{
+	expected := []models.Transaction{
 		transactions[3],
 		transactions[2],
 		transactions[1],
 		transactions[0],
 	}
 
-	sort.Sort(utils.BlockSort(transactions))
+	sort.Sort(BlockSort(transactions))
 
 	isEqual := reflect.DeepEqual(transactions, expected)
 	if !isEqual {
@@ -69,7 +68,7 @@ func TestDelegatesSort(t *testing.T) {
 		delegates[0],
 	}
 
-	sort.Sort(sort.Reverse(utils.ByVotes(delegates)))
+	sort.Sort(sort.Reverse(ByVotes(delegates)))
 
 	isEqual := reflect.DeepEqual(delegates, expected)
 	if !isEqual {

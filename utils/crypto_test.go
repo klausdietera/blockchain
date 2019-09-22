@@ -1,16 +1,14 @@
-package utils_test
+package utils
 
 import (
 	"encoding/hex"
 	"testing"
-
-	"bitbucket.org/axelsheva/blockchain/utils"
 )
 
 func TestGenerateKeyPair(t *testing.T) {
 	secret := "endorse bicycle chunk simple improve paper use radar crazy rain bullet short"
 
-	keyPair := utils.GenerateKeyPair(secret)
+	keyPair := GenerateKeyPair(secret)
 
 	expectedPublicKey := "af682caed24354ad611164b95fa6c43b63c5ebc88712e2cd1f1088a9ba0e167f"
 	actualPublicKey := hex.EncodeToString(keyPair.PublicKey.Bytes)

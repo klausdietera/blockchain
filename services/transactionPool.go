@@ -27,3 +27,7 @@ func (tp *TransactionPool) Unlock() {
 func (tp *TransactionPool) Push(tx *models.Transaction) {
 
 }
+
+func (tp *TransactionPool) Get() []models.Transaction {
+	return []models.Transaction{}
+}

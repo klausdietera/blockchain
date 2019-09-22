@@ -9,17 +9,17 @@ import (
 	"bitbucket.org/axelsheva/blockchain/models/types"
 )
 
-func UnmarshalAsset(bytes []byte, t types.Transaction) (models.IAsset, error) {
+func UnmarshalAsset(bytes []byte, t types.TransactionType) (models.IAsset, error) {
 	switch t {
-	case types.ReferralType:
+	case types.TransactionReferral:
 		var asset assets.Referral
 		err := json.Unmarshal(bytes, &asset)
 		return &asset, err
-	case types.SendType:
+	case types.TransactionSend:
 		var asset assets.Send
 		err := json.Unmarshal(bytes, &asset)
 		return &asset, err
-	case types.DelegateType:
+	case types.TransactionDelegate:
 		var asset assets.Delegate
 		err := json.Unmarshal(bytes, &asset)
 		return &asset, err

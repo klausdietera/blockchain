@@ -1,16 +1,15 @@
-package service_test
+package services
 
 import (
 	"testing"
 
 	"bitbucket.org/axelsheva/blockchain/models"
 	"bitbucket.org/axelsheva/blockchain/repositories"
-	"bitbucket.org/axelsheva/blockchain/services"
 )
 
 func TestGetActive(t *testing.T) {
 	activeDelegatesCount := uint16(3)
-	services.InitDelegate("", activeDelegatesCount)
+	Delegate = NewDelegate("", activeDelegatesCount)
 
 	delegates := []*models.Account{
 		{
@@ -43,7 +42,7 @@ func TestGetActive(t *testing.T) {
 		repositories.Delegates.Add(delegate)
 	}
 
-	active := services.Delegate.GetActive()
+	active := Delegate.GetActive()
 
 	actualLen := len(active)
 	if actualLen != int(activeDelegatesCount) {

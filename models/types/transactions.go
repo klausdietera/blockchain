@@ -1,10 +1,10 @@
 package types
 
-type Transaction uint8
+type TransactionType int32
 
 const (
-	ReferralType  Transaction = 0
-	SendType                  = 10
-	SignatureType             = 20
-	DelegateType              = 30
+	TransactionReferral  TransactionType = 0
+	TransactionSend      TransactionType = 10
+	TransactionSignature TransactionType = 20
+	TransactionDelegate  TransactionType = 30
 )
