@@ -81,12 +81,11 @@ func (s *BlockService) Generate(keyPair sodium.SignKP, timestamp time.Time) (mod
 	transactions := s.transactionPool.Get()
 
 	blockData := models.BlockData{
-		PreviousBlockID: s.lastBlock.ID,
 		Transactions:    transactions,
 		CreatedAt:       timestamp,
 	}
 
-	block, err := utils.NewBlock(blockData, keyPair)
+	block, err := utils.NewBlock(blockData, s.lastBlock, keyPair)
 	if err != nil {
 		return block, err
 	}
